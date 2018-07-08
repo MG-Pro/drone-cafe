@@ -2,24 +2,36 @@
 angular.module('myApp', [
   'ui.router',
   'ngMessages'
-]).config(function ($stateProvider) {
+]).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state({
-      name: 'menu',
+      name: 'getAuth',
       url: '/',
-      templateUrl: 'app/Menu/Menu.html',
-      controller: 'MenuCtrl as vm'
+      templateUrl: './AuthForm/AuthForm.html',
+      controller: 'AuthFormCtrl as vm'
     })
     .state({
-      name: 'kitchen',
-      url: '/kitchen',
-      templateUrl: 'app/Kitchen/Kitchen.html',
-      controller: 'KitchenCtrl as vm'
+      name: 'menu',
+      url: '/menu',
+      templateUrl: './Menu/Menu.html',
+      controller: 'MenuCtrl as vm'
     })
     .state({
       name: 'order',
       url: '/order',
-      templateUrl: 'app/OrderComponent/Order.html',
-      controller: 'OrderCtrl as vm'
+      templateUrl: './OrderComponent/Order.html',
+      controller: 'OrderCtrl as vm',
+      data: {requireLogin: true}
+
     });
-});
+  $urlRouterProvider.otherwise('/');
+})
+  .run(function (AuthService, $state) {
+
+    if (AuthService.isLoggedIn) {
+      $state.go('menu');
+    } else {
+      $state.go('getAuth');
+    }
+
+  });

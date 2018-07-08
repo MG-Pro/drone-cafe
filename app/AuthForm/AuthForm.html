@@ -1,0 +1,22 @@
+<div class="section">
+  <div class="row">
+    <div class="col s6">
+      <h4>Need authorization</h4>
+      <hr>
+      <br>
+      <form name="vm.authForm" novalidate>
+          <div class="input-field ">
+            <input id="name" type="text" class="validate" name="name" required ng-model="vm.user.name">
+            <label class="active" for="name">Name</label>
+          </div>
+          <div class="input-field ">
+            <input id="email" type="email" class="validate" name="email" required ng-model="vm.user.email">
+            <label class="active" for="email">Email</label>
+          </div>
+          <div class=" right-align">
+            <button class="btn waves-effect btn-large " type="submit" ng-click="vm.getAuth(vm.user)" ng-disabled="vm.authForm.$invalid" name="submit">Submit</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
