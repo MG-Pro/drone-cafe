@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
-const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/';
+
+const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/test?retryWrites=false';
 const port = process.env.PORT || 3000;
 
 const user = mongoose.Schema({
@@ -11,7 +12,8 @@ const user = mongoose.Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   balance: Number
 });
@@ -55,27 +57,42 @@ app.get('/users/', (req, res) => {
 });
 
 app.post('/users/', (req, res) => {
-  const user = new UserModel({
-    name: req.body.name
-  });
+  const userData = req.body;
+  if (!userData.email) {
+    sender('err', new Error('Not valid data'), res);
+  }
 
-  user.save(err => {
+  UserModel.findOne({email: userData.email}, (err, user) => {
     if (err) {
-      sender('err', err, res)
+      sender('err', err, res);
     }
-    sender('OK', 'User added', res);
-  });
+    if(user === null) {
+      const user = new UserModel({
+        name: userData.name,
+        email: userData.email,
+        balance: 100,
+      });
 
+      user.save((err, user) => {
+        if (err) {
+          sender('err', err, res)
+        }
+        sender('OK', user, res);
+      });
+    } else {
+      sender('OK', user, res);
+    }
+  });
 });
 
 app.post('/dishes/all', (req, res) => {
   DishModel.create(req.body, err => {
-      if (err) {
-        sender('err', err, res)
-      }
-      sender('OK', 'Dish added', res);
-    });
+    if (err) {
+      sender('err', err, res)
+    }
+    sender('OK', 'Dish added', res);
   });
+});
 
 
 app.listen(port, () => {

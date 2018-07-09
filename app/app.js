@@ -1,7 +1,8 @@
 'use strict';
 angular.module('myApp', [
   'ui.router',
-  'ngMessages'
+  'ngMessages',
+  'ngResource'
 ]).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state({
@@ -27,11 +28,11 @@ angular.module('myApp', [
   $urlRouterProvider.otherwise('/');
 })
   .run(function (AuthService, $state) {
-
-    if (AuthService.isLoggedIn) {
-      $state.go('menu');
-    } else {
-      $state.go('getAuth');
-    }
+    $state.go('getAuth');
+    //if (AuthService.isLoggedIn) {
+    //  $state.go('menu');
+    //} else {
+    //
+    //}
 
   });

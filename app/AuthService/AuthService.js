@@ -1,8 +1,7 @@
 angular
   .module('myApp')
-  .factory('AuthService', function () {
+  .factory('AuthService', function ($resource) {
 
-    return {
-      isLoggedIn: false
-    }
+    return $resource('/users/');
+
   });
