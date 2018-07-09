@@ -1,20 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
 const app = express();
-const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/test?retryWrites=true';
-
+const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/';
 const port = process.env.PORT || 3000;
 
 const user = mongoose.Schema({
   name: {
-    type: String,
+    type: String
   },
   email: {
     type: String,
     required: true
-  }
+  },
+  balance: Number
 });
 
 const dish = mongoose.Schema({
@@ -24,12 +23,12 @@ const dish = mongoose.Schema({
   price: Number,
   ingredients: {
     type: Array,
-    items: { type: 'string'},
+    items: {type: 'string'}
   }
 });
 
 const UserModel = mongoose.model(`User`, user);
-//const DishModel = mongoose.model(`Dish`, dish);
+const DishModel = mongoose.model(`Dish`, dish);
 
 const sender = (status, msg, obj) => {
   obj.json({
@@ -69,14 +68,14 @@ app.post('/users/', (req, res) => {
 
 });
 
-
-
-
-
-
-
-
-
+app.post('/dishes/all', (req, res) => {
+  DishModel.create(req.body, err => {
+      if (err) {
+        sender('err', err, res)
+      }
+      sender('OK', 'Dish added', res);
+    });
+  });
 
 
 app.listen(port, () => {
