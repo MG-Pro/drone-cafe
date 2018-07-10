@@ -32,10 +32,10 @@ const dish = mongoose.Schema({
 const UserModel = mongoose.model(`User`, user);
 const DishModel = mongoose.model(`Dish`, dish);
 
-const sender = (status, msg, obj) => {
+const sender = (status, data, obj) => {
   obj.json({
     status: status,
-    msg: msg
+    data: data
   })
 };
 
