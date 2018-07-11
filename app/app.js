@@ -12,22 +12,14 @@ angular.module('myApp', [
       controller: 'AuthFormCtrl as vm'
     })
     .state({
-      name: 'menu',
-      url: '/menu',
-      templateUrl: './Menu/Menu.html',
-      controller: 'MenuCtrl as vm'
-    })
-    .state({
       name: 'order',
       url: '/order',
-      templateUrl: './OrderComponent/Order.html',
-      controller: 'OrderCtrl as vm',
-      data: {requireLogin: true}
-
-    });
+      templateUrl: './Order/Order.html',
+      controller: 'OrderCtrl as vm'
+    })
   $urlRouterProvider.otherwise('/');
 })
-  .run(function (AuthService, $state) {
+  .run(function ($state) {
     $state.go('getAuth');
     //if (AuthService.isLoggedIn) {
     //  $state.go('menu');

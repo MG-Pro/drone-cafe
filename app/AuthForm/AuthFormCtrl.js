@@ -1,13 +1,13 @@
 angular
   .module('myApp')
-  .controller('AuthFormCtrl', function ($state, AuthService, StorageService) {
+  .controller('AuthFormCtrl', function ($state, UserService, StorageService) {
     const vm = this;
     vm.getAuth = function (formData) {
-      const newUser = new AuthService(formData);
+      const newUser = new UserService(formData);
       newUser.$save()
         .then(user => {
           StorageService.setUser(user.data);
-          $state.go('menu');
+          $state.go('order');
         })
         .catch(err => console.log(err));
 

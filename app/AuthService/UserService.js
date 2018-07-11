@@ -1,7 +1,5 @@
 angular
   .module('myApp')
-  .factory('AuthService', function ($resource) {
-
+  .factory('UserService', function ($resource) {
     return $resource('/users/');
-
   });

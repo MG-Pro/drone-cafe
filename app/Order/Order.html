@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col s4 account">
+    <h4>Account</h4>
+    <h3>Name: <span>{{vm.name}}</span></h3>
+    <p>Balance: <span>{{vm.balance}}</span></p>
+    <button
+      class="waves-effect waves-light btn-large"
+      ng-click="vm.addFunds()"
+    >Add funds</button>
+  </div>
+  <div class="col s8">
+    <h4>Order Status</h4>
+    <div>
+      <h5 ng-hide="vm.order.length">No orders yet</h5>
+      <h5 ng-show="vm.order.length">Your order</h5>
+      <ul>
+        <li ng-repeat="dish in vm.order">
+          <p>
+            <span>{{dish.title}}</span>
+            <span class="right">{{dish.price}}</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+</div>
