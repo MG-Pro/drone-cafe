@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 
 const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/test?retryWrites=false';
 const port = process.env.PORT || 3000;
@@ -94,8 +97,25 @@ app.post('/dishes/all', (req, res) => {
   });
 });
 
+io.on('connection', (socket) => {
+  socket.on('addCredit', (id) => {
+    UserModel.findByIdAndUpdate(id, {$inc: {balance: 100}}, (err, res) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(res);
+      socket.emit('addCredit', res);
+    });
 
-app.listen(port, () => {
+    const status = {
+
+    };
+
+  });
+
+});
+
+http.listen(port, () => {
   console.log(`App started on ${port} port`);
   mongoose.connect(dbUrl, err => {
     if (err) return console.log(err);
