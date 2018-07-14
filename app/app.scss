@@ -46,5 +46,27 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-
+}
+.btn-large {
+  margin-top: 1.52rem;
+}
+.collection {
+  h3 {
+    color: #686868;
+  }
+  .price {
+    font-size: 17px;
+    span {
+      font-weight: 700;
+      font-size: 34px;
+    }
+  }
+  .status {
+    font-size: 17px;
+    span {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #34881f;
+    }
+  }
 }

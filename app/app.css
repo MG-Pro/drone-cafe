@@ -39,4 +39,21 @@
   justify-content: space-around;
   flex-wrap: wrap; }
 
+.btn-large {
+  margin-top: 1.52rem; }
+
+.collection h3 {
+  color: #686868; }
+.collection .price {
+  font-size: 17px; }
+  .collection .price span {
+    font-weight: 700;
+    font-size: 34px; }
+.collection .status {
+  font-size: 17px; }
+  .collection .status span {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #34881f; }
+
 /*# sourceMappingURL=app.css.map */

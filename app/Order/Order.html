@@ -10,21 +10,21 @@
     </button>
   </div>
   <div class="col s8">
+    <button
+      class="waves-effect waves-light btn-large right"
+      ng-click="vm.openMenu()"
+    >Add dish
+    </button>
     <h4>Order Status</h4>
     <div>
       <h5 ng-hide="vm.order.length">No orders yet</h5>
       <h5 ng-show="vm.order.length">Your order</h5>
-      <button
-        class="waves-effect waves-light btn-large right"
-        ng-click="vm.openMenu()"
-      >Add dish
-      </button>
-      <ul>
-        <li ng-repeat="dish in vm.order">
+      <ul class="collection">
+        <li ng-repeat="dish in vm.order" class="collection-item">
           <p>
-            <p>{{dish.title}}</p>
-            <p>{{dish.status}}</p>
-            <span class="right">{{dish.price}}</span>
+          <h5>{{dish.title}}</h5>
+          <span class="right price">Price: <span>{{dish.price}}</span> C</span>
+          <p class="status">Status <span>{{dish.status}}</span></p>
           </p>
         </li>
       </ul>
@@ -54,6 +54,5 @@
         </li>
       </ul>
     </div>
-   
   </div>
 </div>

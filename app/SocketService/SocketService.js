@@ -24,6 +24,15 @@ angular
             done(res);
           });
         });
-      }
+      },
+      addDishToOrder() {
+        return new Promise((done) => {
+          socket.emit('addDishToOrder');
+          socket.on('addDishToOrder', function (res) {
+            done(res);
+          });
+        });
+      },
+
     }
   });

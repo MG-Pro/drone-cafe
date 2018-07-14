@@ -7,8 +7,13 @@ angular
     this.menuShow = false;
     this.order = [];
     this.menu = [];
-
-    let a;
+    this.statuses = [
+      'ordered',
+      'start prepared',
+      'complete',
+      'start delivered',
+      'delivered'
+    ];
 
     this.addFunds = () => {
       SocketService.addCredit(this.id)
@@ -21,7 +26,7 @@ angular
       if (this.menu.length) {
         return;
       }
-      SocketService.getDishes(this.id)
+      SocketService.getDishes()
         .then((res) => {
           $scope.$apply(() => {
             this.menu = res;
@@ -37,7 +42,17 @@ angular
     };
     this.addDish = ($event, dish) => {
       $event.preventDefault();
-      console.log(dish);
+      this.menuShow = false;
+      SocketService.addDishToOrder(dish._id)
+        .then((res) => {
+          $scope.$apply(() => {
+            this.order.push(res);
+            console.log(res);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     };
 
 

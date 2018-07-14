@@ -116,6 +116,14 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('addDishToOrder', () => {
+    DishModel.find((err, res) => {
+      if (err) {
+        console.log(err);
+      }
+      socket.emit('addDishToOrder', res);
+    });
+  });
 });
 
 http.listen(port, () => {
