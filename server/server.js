@@ -103,14 +103,17 @@ io.on('connection', (socket) => {
       if (err) {
         console.log(err);
       }
-      console.log(res);
       socket.emit('addCredit', res);
     });
+  });
 
-    const status = {
-
-    };
-
+  socket.on('getDishes', () => {
+    DishModel.find((err, res) => {
+      if (err) {
+        console.log(err);
+      }
+      socket.emit('getDishes', res);
+    });
   });
 
 });

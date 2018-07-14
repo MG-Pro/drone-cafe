@@ -6,22 +6,54 @@
     <button
       class="waves-effect waves-light btn-large"
       ng-click="vm.addFunds()"
-    >Add funds</button>
+    >Add funds
+    </button>
   </div>
   <div class="col s8">
     <h4>Order Status</h4>
     <div>
       <h5 ng-hide="vm.order.length">No orders yet</h5>
       <h5 ng-show="vm.order.length">Your order</h5>
+      <button
+        class="waves-effect waves-light btn-large right"
+        ng-click="vm.openMenu()"
+      >Add dish
+      </button>
       <ul>
         <li ng-repeat="dish in vm.order">
           <p>
-            <span>{{dish.title}}</span>
+            <p>{{dish.title}}</p>
+            <p>{{dish.status}}</p>
             <span class="right">{{dish.price}}</span>
           </p>
         </li>
       </ul>
     </div>
-    
+  </div>
+  <div class="modal z-depth-4" ng-show="vm.menuShow">
+    <div class="modal-header">
+      <button class="btn-flat close-btn" ng-click="vm.closeMenu()">Close</button>
+    </div>
+    <div class="modal-content">
+      <h2>Menu</h2>
+      <ul class="dish-list">
+        <li ng-repeat="dish in vm.menu">
+          <div class="card">
+            <div class="card-image">
+              <img src="{{dish.image}}">
+            </div>
+            <div class="card-content right-align">
+              <span class="card-title">{{dish.title}}</span>
+              <p class="price">Price <span>{{dish.price}}</span> C</p>
+              <p class="rating">Rating <span>{{dish.rating}}</span></p>
+            </div>
+            <div class="card-action right-align">
+              <a href="#" class="btn" ng-click="vm.addDish($event, dish)">Add</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+   
   </div>
 </div>

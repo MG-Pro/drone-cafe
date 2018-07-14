@@ -12,16 +12,18 @@ angular
       addCredit(id) {
         return new Promise((done) => {
           socket.emit('addCredit', id);
-
           socket.on('addCredit', function (res) {
             done(res);
           });
-
         });
-
+      },
+      getDishes() {
+        return new Promise((done) => {
+          socket.emit('getDishes');
+          socket.on('getDishes', function (res) {
+            done(res);
+          });
+        });
       }
-
     }
-
-
   });

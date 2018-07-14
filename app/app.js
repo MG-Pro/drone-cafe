@@ -16,15 +16,21 @@ angular.module('myApp', [
       url: '/order',
       templateUrl: './Order/Order.html',
       controller: 'OrderCtrl as vm'
-    })
+    });
+
   $urlRouterProvider.otherwise('/');
 })
-  .run(function ($state) {
+  .run(function ($state, $rootScope) {
     $state.go('getAuth');
-    //if (AuthService.isLoggedIn) {
+
+    //if (UserService.isLoggedIn) {
     //  $state.go('menu');
     //} else {
     //
     //}
+
+    //$rootScope.$on( "$stateChangeStart", function(event, next, current) {
+    //  console.log('go');
+    //});
 
   });
