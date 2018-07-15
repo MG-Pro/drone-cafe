@@ -42,7 +42,11 @@ const dish = mongoose.Schema({
 const order = mongoose.Schema({
   dish: Object,
   status: String,
-  date: Date
+  date: Date,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }
 });
 
 const UserModel = mongoose.model(`User`, user);
@@ -130,8 +134,8 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('addDishToOrder', (id) => {
-    DishModel.findById(id, (err, dish) => {
+  socket.on('addDishToOrder', (data) => {
+    DishModel.findById(data.dishId, (err, dish) => {
       if (err) {
         console.log(err);
       }
@@ -140,6 +144,7 @@ io.on('connection', (socket) => {
         dish: dish,
         status: statuses[0],
         date: Date.now(),
+        user: data.userId
       });
       order.save((err, res) => {
         if (err) {
@@ -158,6 +163,17 @@ io.on('connection', (socket) => {
       socket.emit('subCredit', res);
     });
   });
+
+  socket.on('getOrders', (userId) => {
+    OrderModel.find({user: userId}, (err, orders) => {
+      if (err) {
+        console.log(err);
+      }
+      socket.emit('getOrders', orders);
+    });
+  });
+
+
 });
 
 http.listen(port, () => {

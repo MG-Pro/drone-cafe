@@ -2,9 +2,18 @@ angular
   .module('myApp')
   .component('headerApp', {
     templateUrl: 'HeaderComponent/HeaderComponent.html',
-    controller: function (StorageService) {
-      //this.name = StorageService.getUser().name;
-      //this.balance = StorageService.getUser().balance;
+
+    controller: ($scope, StorageService, $state) => {
+      $scope.isAuth = false;
+      const user = StorageService.getStorage();
+      if(user) {
+        $scope.isAuth = true;
+      }
+      $scope.logOut = () => {
+        StorageService.clearStorage();
+        $state.go('getAuth');
+      };
+
 
     }
   });

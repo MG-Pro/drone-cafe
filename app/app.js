@@ -4,7 +4,7 @@ angular.module('myApp', [
   'ngMessages',
   'ngResource',
   'LocalStorageModule'
-]).config(function ($stateProvider, $urlRouterProvider) {
+]).config(($stateProvider, $urlRouterProvider) => {
   $stateProvider
     .state('getAuth', {
       url: '/',
@@ -24,17 +24,14 @@ angular.module('myApp', [
 
   $urlRouterProvider.otherwise('/');
 })
-  .run(function ($state, $rootScope, StorageService, $timeout) {
-    //$state.go('getAuth');
-
-    //if (!StorageService.getUser()) {
-    //  $timeout(function(){
-    //    $state.go('getAuth')
-    //  })
-    //}
+  .run(($state, $rootScope, StorageService, $timeout) => {
+    if (StorageService.getStorage()) {
+      $timeout(() => {
+        $state.go('order');
+      })
+    }
 
     //$rootScope.$on( "$stateChangeStart", function(event, next, current) {
     //  console.log('go');
     //});
-
   });

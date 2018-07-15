@@ -6,7 +6,7 @@ angular
       const newUser = new UserService(formData);
       newUser.$save()
         .then(user => {
-          StorageService.setUser(user.data);
+          StorageService.setStorage(user.data);
           $state.go('order');
         })
         .catch(err => console.log(err));

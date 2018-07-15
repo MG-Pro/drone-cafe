@@ -2,12 +2,15 @@ angular
   .module('myApp')
   .factory('StorageService', function (localStorageService) {
     return {
-      setUser(data) {
-        localStorageService.set('auth', data);
+      setStorage(data) {
+        localStorageService.cookie.set('user', data, 1);
       },
-      getUser() {
-        return localStorageService.get('auth');
+      getStorage() {
+        return localStorageService.cookie.get('user');
       },
+      clearStorage() {
+        localStorageService.cookie.remove('user');
+      }
     }
 
 

@@ -1,18 +1,29 @@
 angular
   .module('myApp')
   .controller('OrderCtrl', function($scope, $state, StorageService, SocketService) {
-    const user = StorageService.getUser('auth');
+    const user = StorageService.getStorage();
+    this.menuShow = false;
+    this.order = [];
+    this.menu = [];
+
     if(user) {
       this.name = user.name;
       this.balance = user.balance;
       this.id = user._id;
+      SocketService.getOrders(this.id)
+        .then(orders => {
+          $scope.$apply(() => {
+            orders.forEach(order => {
+              order.time = getTime(order.date);
+              this.order.push(order);
+            })
+          });
+        });
     } else {
       $state.go('getAuth');
     }
 
-    this.menuShow = false;
-    this.order = [];
-    this.menu = [];
+
 
     const getTime = (date) => {
       const time = new Date(date);
@@ -32,6 +43,8 @@ angular
         .then((res) => {
           $scope.$apply(() => {
             this.balance = res.balance;
+            user.balance = res.balance;
+            StorageService.setStorage(user);
           });
         })
     };
@@ -58,7 +71,7 @@ angular
       $event.preventDefault();
       this.menuShow = false;
       Promise.all([
-        SocketService.addDishToOrder(dish._id),
+        SocketService.addDishToOrder(dish._id, this.id),
         SocketService.subCredit(this.id, dish.price)
       ])
         .then((res) => {
@@ -66,13 +79,14 @@ angular
             res[0].time = getTime(res[0].date);
             this.order.push(res[0]);
             this.balance = res[1].balance;
+            user.balance = res[1].balance;
+            StorageService.setStorage(user);
           });
         })
         .catch((err) => {
           console.log(err);
         })
     };
-
 
 
   });

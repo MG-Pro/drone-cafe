@@ -76,12 +76,19 @@
       font-weight: 700;
       font-size: 34px; }
   .collection .status {
-    font-size: 17px; }
+    font-size: 17px;
+    margin-bottom: 0; }
     .collection .status span {
       font-weight: 700;
       text-transform: uppercase;
       color: #34881f; }
-  .collection .time span {
-    font-weight: 700; }
+  .collection .time {
+    margin-bottom: 0; }
+    .collection .time span {
+      font-weight: 700; }
+
+.close-btn {
+  color: #ffffff;
+  font-size: 20px; }
 
 /*# sourceMappingURL=app.css.map */

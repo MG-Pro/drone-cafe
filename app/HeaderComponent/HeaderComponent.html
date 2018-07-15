@@ -2,14 +2,14 @@
   <div class="container">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Dron Cafe</a>
-      <ul class="right">
-        <li>
-          <h3>{{$ctrl.name}}</h3>
-        </li>
-        <li>
-          <h5>{{$ctrl.balance}}</h5>
-        </li>
-      </ul>
+      <div class="right">
+        <button
+          ng-click="logOut()"
+          ng-show="isAuth"
+          class="btn-flat close-btn"
+        >Logout
+        </button>
+      </div>
     </div>
   </div>
 </nav>
