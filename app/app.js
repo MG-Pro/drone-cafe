@@ -2,7 +2,8 @@
 angular.module('myApp', [
   'ui.router',
   'ngMessages',
-  'ngResource'
+  'ngResource',
+  'LocalStorageModule'
 ]).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('getAuth', {
@@ -26,11 +27,11 @@ angular.module('myApp', [
   .run(function ($state, $rootScope, StorageService, $timeout) {
     //$state.go('getAuth');
 
-    if (!StorageService.isLoggedIn) {
-      $timeout(function(){
-        $state.go('getAuth')
-      })
-    }
+    //if (!StorageService.getUser()) {
+    //  $timeout(function(){
+    //    $state.go('getAuth')
+    //  })
+    //}
 
     //$rootScope.$on( "$stateChangeStart", function(event, next, current) {
     //  console.log('go');

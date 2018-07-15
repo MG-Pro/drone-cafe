@@ -1,8 +1,8 @@
 {
   "name": "netology-nd-drone-cafe",
   "version": "1.0.0",
-  "description": "В рамках дипломного проект необходимо разработать систему автоматизации ресторана, в котором вместо официантов используются автономные дроны, а заказ размещается через простое веб-приложение.",
-  "main": "index.js",
+  "description": "Дипломный проект",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./server/server.js",
@@ -10,14 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/netology-university/drone-cafe.git"
+    "url": "https://github.com/MG-Pro/drone-cafe"
   },
   "keywords": [],
-  "author": "Dima Fitiskin <dfitiskin@gmail.com>",
+  "author": "MIkhail Gladkikh",
   "license": "MIT",
   "homepage": "https://bitbucket.org/netology-university/drone-cafe#readme",
   "dependencies": {
-    "angular": "^1.7.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongodb": "^3.0.10",
@@ -29,5 +28,5 @@
     "node": "8.11.x",
     "npm": "6.1.0"
   },
-  "private": true
+  "private": false
 }

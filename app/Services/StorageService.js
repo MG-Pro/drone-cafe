@@ -1,17 +1,13 @@
 angular
   .module('myApp')
-  .factory('StorageService', function () {
-    let user = {};
+  .factory('StorageService', function (localStorageService) {
     return {
       setUser(data) {
-
-        user = data;
-        console.log(user);
+        localStorageService.set('auth', data);
       },
       getUser() {
-        return user;
+        return localStorageService.get('auth');
       },
-      isLoggedIn: false
     }
 
 

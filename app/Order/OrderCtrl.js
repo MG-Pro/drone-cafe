@@ -1,13 +1,18 @@
 angular
   .module('myApp')
-  .controller('OrderCtrl', function($scope, StorageService, SocketService) {
-    this.name = StorageService.getUser().name;
-    this.balance = StorageService.getUser().balance;
-    this.id = StorageService.getUser()._id;
+  .controller('OrderCtrl', function($scope, $state, StorageService, SocketService) {
+    const user = StorageService.getUser('auth');
+    if(user) {
+      this.name = user.name;
+      this.balance = user.balance;
+      this.id = user._id;
+    } else {
+      $state.go('getAuth');
+    }
+
     this.menuShow = false;
     this.order = [];
     this.menu = [];
-    this.addDishIsNoActive = true;
 
     const getTime = (date) => {
       const time = new Date(date);
