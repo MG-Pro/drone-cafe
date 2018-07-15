@@ -1,5 +1,20 @@
 .account {
-  border-right: 1px solid #cccccc;
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-right: 1px solid #cccccc;
+    height: 100vh;
+    top: 0;
+    right: 0;
+  }
+  .balance {
+    font-size: 21px;
+    span {
+      font-weight: 700;
+    }
+  }
 }
 .modal {
   display: block;
@@ -25,13 +40,15 @@
       font-weight: 700;
       font-size: 35px;
     }
-
   }
   .card-title {
     height: 75px;
     font-size: 20px;
     font-weight: 700;
     line-height: 1.25 !important;
+  }
+  .card-action {
+    min-height: 60px;
   }
   .rating {
     color: #686868;
@@ -40,6 +57,14 @@
       font-weight: 700;
       font-size: 20px;
     }
+  }
+  .note {
+    color: #ff5261;
+    font-size: 16px;
+  }
+  .add-btn {
+    position: relative;
+    top: -7px;
   }
 }
 .dish-list {
@@ -51,8 +76,14 @@
   margin-top: 1.52rem;
 }
 .collection {
-  h3 {
+  margin-top: 30px;
+  p {
+    margin: 0;
+    margin-bottom: 15px;
+  }
+  .title {
     color: #686868;
+    font-size: 24px;
   }
   .price {
     font-size: 17px;
@@ -67,6 +98,11 @@
       font-weight: 700;
       text-transform: uppercase;
       color: #34881f;
+    }
+  }
+  .time {
+    span {
+      font-weight: 700;
     }
   }
 }

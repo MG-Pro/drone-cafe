@@ -2,7 +2,7 @@
   <div class="col s4 account">
     <h4>Account</h4>
     <h3>Name: <span>{{vm.name}}</span></h3>
-    <p>Balance: <span>{{vm.balance}}</span></p>
+    <p class="balance">Balance: <span>{{vm.balance}}</span> C</p>
     <button
       class="waves-effect waves-light btn-large"
       ng-click="vm.addFunds()"
@@ -20,12 +20,16 @@
       <h5 ng-hide="vm.order.length">No orders yet</h5>
       <h5 ng-show="vm.order.length">Your order</h5>
       <ul class="collection">
-        <li ng-repeat="dish in vm.order" class="collection-item">
-          <p>
-          <h5>{{dish.title}}</h5>
-          <span class="right price">Price: <span>{{dish.price}}</span> C</span>
-          <p class="status">Status <span>{{dish.status}}</span></p>
-          </p>
+        <li ng-repeat="order in vm.order" class="collection-item row">
+          <div class="col s9">
+            <p class="title">{{order.dish.title}}</p>
+            <p class="status">Status <span>{{order.status}}</span></p>
+          </div>
+          <div class="col s3 right-align">
+            <p class="price">Price: <span>{{order.dish.price}}</span> C</p>
+            <p class="time">Order time <span>{{order.time}}</span></p>
+          </div>
+          
         </li>
       </ul>
     </div>
@@ -47,8 +51,9 @@
               <p class="price">Price <span>{{dish.price}}</span> C</p>
               <p class="rating">Rating <span>{{dish.rating}}</span></p>
             </div>
-            <div class="card-action right-align">
-              <a href="#" class="btn" ng-click="vm.addDish($event, dish)">Add</a>
+            <div class="card-action">
+              <span class="note" ng-show="vm.balance <= dish.price">Not enough credits</span>
+              <button class="btn right add-btn" ng-click="vm.addDish($event, dish)" ng-disabled="vm.balance <= dish.price">Add</button>
             </div>
           </div>
         </li>

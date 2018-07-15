@@ -1,5 +1,17 @@
 .account {
-  border-right: 1px solid #cccccc; }
+  position: relative; }
+  .account:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-right: 1px solid #cccccc;
+    height: 100vh;
+    top: 0;
+    right: 0; }
+  .account .balance {
+    font-size: 21px; }
+    .account .balance span {
+      font-weight: 700; }
 
 .modal {
   display: block;
@@ -27,12 +39,20 @@
     font-size: 20px;
     font-weight: 700;
     line-height: 1.25 !important; }
+  .card .card-action {
+    min-height: 60px; }
   .card .rating {
     color: #686868; }
     .card .rating span {
       color: #ffcd84;
       font-weight: 700;
       font-size: 20px; }
+  .card .note {
+    color: #ff5261;
+    font-size: 16px; }
+  .card .add-btn {
+    position: relative;
+    top: -7px; }
 
 .dish-list {
   display: flex;
@@ -42,18 +62,26 @@
 .btn-large {
   margin-top: 1.52rem; }
 
-.collection h3 {
-  color: #686868; }
-.collection .price {
-  font-size: 17px; }
-  .collection .price span {
-    font-weight: 700;
-    font-size: 34px; }
-.collection .status {
-  font-size: 17px; }
-  .collection .status span {
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #34881f; }
+.collection {
+  margin-top: 30px; }
+  .collection p {
+    margin: 0;
+    margin-bottom: 15px; }
+  .collection .title {
+    color: #686868;
+    font-size: 24px; }
+  .collection .price {
+    font-size: 17px; }
+    .collection .price span {
+      font-weight: 700;
+      font-size: 34px; }
+  .collection .status {
+    font-size: 17px; }
+    .collection .status span {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #34881f; }
+  .collection .time span {
+    font-weight: 700; }
 
 /*# sourceMappingURL=app.css.map */

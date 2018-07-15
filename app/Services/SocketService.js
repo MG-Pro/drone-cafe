@@ -17,6 +17,14 @@ angular
           });
         });
       },
+      subCredit(id, price) {
+        return new Promise((done) => {
+          socket.emit('subCredit', {id: id, val: price});
+          socket.on('subCredit', function (res) {
+            done(res);
+          });
+        });
+      },
       getDishes() {
         return new Promise((done) => {
           socket.emit('getDishes');
@@ -25,9 +33,9 @@ angular
           });
         });
       },
-      addDishToOrder() {
+      addDishToOrder(id) {
         return new Promise((done) => {
-          socket.emit('addDishToOrder');
+          socket.emit('addDishToOrder', id);
           socket.on('addDishToOrder', function (res) {
             done(res);
           });

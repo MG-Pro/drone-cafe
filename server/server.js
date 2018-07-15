@@ -5,6 +5,13 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+const statuses = [
+  'ordered',
+  'start prepared',
+  'complete',
+  'start delivered',
+  'delivered'
+];
 
 const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/test?retryWrites=false';
 const port = process.env.PORT || 3000;
@@ -32,9 +39,15 @@ const dish = mongoose.Schema({
   }
 });
 
+const order = mongoose.Schema({
+  dish: Object,
+  status: String,
+  date: Date
+});
 
 const UserModel = mongoose.model(`User`, user);
 const DishModel = mongoose.model(`Dish`, dish);
+const OrderModel = mongoose.model(`Order`, order);
 
 const sender = (status, data, obj) => {
   obj.json({
@@ -100,7 +113,7 @@ app.post('/dishes/all', (req, res) => {
 
 io.on('connection', (socket) => {
   socket.on('addCredit', (id) => {
-    UserModel.findByIdAndUpdate(id, {$inc: {balance: 100}}, (err, res) => {
+    UserModel.findByIdAndUpdate(id, {$inc: {balance: 100}}, {new: true}, (err, res) => {
       if (err) {
         console.log(err);
       }
@@ -117,12 +130,32 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('addDishToOrder', () => {
-    DishModel.find((err, res) => {
+  socket.on('addDishToOrder', (id) => {
+    DishModel.findById(id, (err, dish) => {
       if (err) {
         console.log(err);
       }
-      socket.emit('addDishToOrder', res);
+
+      const order = new OrderModel({
+        dish: dish,
+        status: statuses[0],
+        date: Date.now(),
+      });
+      order.save((err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        socket.emit('addDishToOrder', res);
+      });
+    });
+  });
+
+  socket.on('subCredit', (data) => {
+    UserModel.findByIdAndUpdate(data.id, {$inc: {balance: - data.val}}, {new: true}, (err, res) => {
+      if (err) {
+        console.log(err);
+      }
+      socket.emit('subCredit', res);
     });
   });
 });

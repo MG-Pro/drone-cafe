@@ -7,18 +7,27 @@ angular
     this.menuShow = false;
     this.order = [];
     this.menu = [];
-    this.statuses = [
-      'ordered',
-      'start prepared',
-      'complete',
-      'start delivered',
-      'delivered'
-    ];
+    this.addDishIsNoActive = true;
+
+    const getTime = (date) => {
+      const time = new Date(date);
+      let hours = time.getHours();
+      let minutes = time.getMinutes();
+      if (hours <= 9) {
+        hours = '0' + hours;
+      }
+      if(minutes <= 9) {
+        minutes = '0' + minutes;
+      }
+       return `${hours}:${minutes}`;
+    };
 
     this.addFunds = () => {
       SocketService.addCredit(this.id)
         .then((res) => {
-          this.balance = res.balance;
+          $scope.$apply(() => {
+            this.balance = res.balance;
+          });
         })
     };
     this.openMenu = () => {
@@ -43,11 +52,15 @@ angular
     this.addDish = ($event, dish) => {
       $event.preventDefault();
       this.menuShow = false;
-      SocketService.addDishToOrder(dish._id)
+      Promise.all([
+        SocketService.addDishToOrder(dish._id),
+        SocketService.subCredit(this.id, dish.price)
+      ])
         .then((res) => {
           $scope.$apply(() => {
-            this.order.push(res);
-            console.log(res);
+            res[0].time = getTime(res[0].date);
+            this.order.push(res[0]);
+            this.balance = res[1].balance;
           });
         })
         .catch((err) => {

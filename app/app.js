@@ -14,6 +14,11 @@ angular.module('myApp', [
       url: '/order',
       templateUrl: './Order/Order.html',
       controller: 'OrderCtrl as vm'
+    })
+    .state('kitchen', {
+      url: '/kitchen',
+      templateUrl: './Kitchen/Kitchen.html',
+      controller: 'KitchenCtrl as vm'
     });
 
   $urlRouterProvider.otherwise('/');
