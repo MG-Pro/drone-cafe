@@ -24,5 +24,9 @@
     "netology-fake-drone-api": "^1.0.1",
     "socket.io": "^2.1.1"
   },
+  "engines": {
+    "node": "8.11.x",
+    "npm": "6.1.0"
+  },
   "private": true
 }

@@ -5,14 +5,12 @@ angular.module('myApp', [
   'ngResource'
 ]).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
-    .state({
-      name: 'getAuth',
+    .state('getAuth', {
       url: '/',
       templateUrl: './AuthForm/AuthForm.html',
       controller: 'AuthFormCtrl as vm'
     })
-    .state({
-      name: 'order',
+    .state('order', {
       url: '/order',
       templateUrl: './Order/Order.html',
       controller: 'OrderCtrl as vm'
@@ -20,14 +18,14 @@ angular.module('myApp', [
 
   $urlRouterProvider.otherwise('/');
 })
-  .run(function ($state, $rootScope) {
-    $state.go('getAuth');
+  .run(function ($state, $rootScope, StorageService, $timeout) {
+    //$state.go('getAuth');
 
-    //if (UserService.isLoggedIn) {
-    //  $state.go('menu');
-    //} else {
-    //
-    //}
+    if (!StorageService.isLoggedIn) {
+      $timeout(function(){
+        $state.go('getAuth')
+      })
+    }
 
     //$rootScope.$on( "$stateChangeStart", function(event, next, current) {
     //  console.log('go');

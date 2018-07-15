@@ -10,7 +10,8 @@ angular
       },
       getUser() {
         return user;
-      }
+      },
+      isLoggedIn: false
     }
 
 
