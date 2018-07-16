@@ -173,6 +173,14 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('orderStatus', (userId) => {
+    OrderModel.find({user: userId}, (err, orders) => {
+      if (err) {
+        console.log(err);
+      }
+      socket.emit('orderStatus', orders);
+    });
+  });
 
 });
 

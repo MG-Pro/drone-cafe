@@ -3,7 +3,7 @@ angular
   .component('headerApp', {
     templateUrl: 'HeaderComponent/HeaderComponent.html',
 
-    controller: ($rootScope, $scope, StorageService, $state, $transitions) => {
+    controller: function($scope, StorageService, $state, $transitions) {
       $scope.isAuth = false;
       const user = StorageService.getStorage();
 
@@ -16,9 +16,14 @@ angular
         $state.go('getAuth');
       };
 
+      $scope.toKitchen = () => {
+        $state.go('kitchen');
+      };
       $transitions.onSuccess({}, () => {
-        const user = StorageService.getStorage();
-        $scope.isAuth = !!user;
+        $scope.isAuth = !!StorageService.getStorage();
+      });
+      $transitions.onSuccess({to: 'kitchen'}, () => {
+        $scope.isAuth = false;
       });
     }
   });

@@ -2,14 +2,24 @@
   <div class="container">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Dron Cafe</a>
-      <div class="right">
-        <button
-          ng-click="logOut()"
-          ng-show="isAuth"
-          class="btn-flat close-btn"
-        >Logout
-        </button>
-      </div>
+      <ul class="right">
+        <li>
+          <a
+            ng-click="logOut()"
+            ng-show="isAuth"
+            class="btn-flat close-btn"
+          >Logout
+          </a>
+        </li>
+        <li>
+          <a
+            ng-click="toKitchen()"
+            ng-hide="isAuth"
+            class="btn-flat close-btn"
+          >Kitchen
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

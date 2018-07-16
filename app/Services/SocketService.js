@@ -2,12 +2,6 @@ angular
   .module('myApp')
   .factory('SocketService', function () {
     const socket = io();
-
-
-
-
-
-
     return {
       addCredit(id) {
         return new Promise((done) => {
@@ -49,5 +43,6 @@ angular
           });
         });
       },
+      socket: socket,
     }
   });

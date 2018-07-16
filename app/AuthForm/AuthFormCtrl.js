@@ -10,8 +10,6 @@ angular
           $state.go('order');
         })
         .catch(err => console.log(err));
-
-
     }
 
 

@@ -1,6 +1,6 @@
 angular
   .module('myApp')
-  .controller('OrderCtrl', function($scope, $state, StorageService, SocketService) {
+  .controller('OrderCtrl', function ($scope, $state, StorageService, SocketService) {
     const user = StorageService.getStorage();
     this.menuShow = false;
     this.order = [];
@@ -85,4 +85,10 @@ angular
           console.log(err);
         })
     };
+
+    SocketService.socket.on('orderStatus', (order) => {
+      console.log(order);
+
+    });
+
   });

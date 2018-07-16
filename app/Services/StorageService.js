@@ -1,6 +1,6 @@
 angular
   .module('myApp')
-  .factory('StorageService', function (localStorageService) {
+  .factory('StorageService', function(localStorageService) {
     return {
       setStorage(data) {
         localStorageService.cookie.set('user', data, 1);
@@ -12,6 +12,5 @@ angular
         localStorageService.cookie.remove('user');
       }
     }
-
 
   });

@@ -24,14 +24,10 @@ angular.module('myApp', [
 
   $urlRouterProvider.otherwise('/');
 })
-  .run(($state, $rootScope, StorageService, $timeout) => {
-    if (StorageService.getStorage()) {
-      $timeout(() => {
-        $state.go('order');
-      })
-    }
-
-    //$rootScope.$on( "$stateChangeStart", function(event, next, current) {
-    //  console.log('go');
-    //});
+  .run(($state, StorageService, $transitions) => {
+    $transitions.onStart({to: 'order'}, () => {
+      if (StorageService.getStorage()) {
+        $state.go('auth');
+      }
+    });
   });

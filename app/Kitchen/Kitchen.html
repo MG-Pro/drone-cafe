@@ -1,1 +1,39 @@
-<h1>Kitchen</h1>
+<div class="row">
+  <div class="col s4 account">
+    <h4>Ordered dishes</h4>
+    <h5 ng-hide="vm.ordered.length">No orders yet</h5>
+    <h5 ng-show="vm.ordered.length">Your order</h5>
+    <ul class="collection">
+      <li ng-repeat="order in vm.ordered" class="collection-item row">
+        <div class="col s9">
+          <p class="title">{{order.dish.title}}</p>
+          <p class="status">Status <span>{{order.status}}</span></p>
+        </div>
+        <div class="col s3 right-align">
+          <p class="price">Price: <span>{{order.dish.price}}</span> C</p>
+          <p class="time">Order time <span>{{order.time}}</span></p>
+        </div>
+    
+      </li>
+    </ul>
+  </div>
+  <div class="col s8">
+    <h4>Cooking process</h4>
+    <div>
+      <h5 ng-hide="vm.cooking.length">No orders yet</h5>
+      <h5 ng-show="vm.cooking.length">Cooking</h5>
+      <ul class="collection">
+        <li ng-repeat="order in vm.cooking" class="collection-item row">
+          <div class="col s9">
+            <p class="title">{{order.dish.title}}</p>
+            <p class="status">Status <span>{{order.status}}</span></p>
+          </div>
+          <div class="col s3 right-align">
+            <p class="price">Price: <span>{{order.dish.price}}</span> C</p>
+            <p class="time">Order time <span>{{order.time}}</span></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
