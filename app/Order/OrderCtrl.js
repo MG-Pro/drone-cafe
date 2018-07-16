@@ -23,8 +23,6 @@ angular
       $state.go('getAuth');
     }
 
-
-
     const getTime = (date) => {
       const time = new Date(date);
       let hours = time.getHours();
@@ -87,6 +85,4 @@ angular
           console.log(err);
         })
     };
-
-
   });
