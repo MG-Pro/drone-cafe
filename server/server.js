@@ -7,10 +7,10 @@ const io = require('socket.io')(http);
 
 const statuses = [
   'ordered',
-  'start prepared',
-  'complete',
-  'start delivered',
-  'delivered'
+  'cooking',
+  'delivered',
+  'rejection',
+  'filed'
 ];
 
 const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/test?retryWrites=false';
@@ -165,7 +165,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('getOrders', (userId) => {
-    OrderModel.find({user: userId}, (err, orders) => {
+    const param = userId ? {user: userId} : null;
+    OrderModel.find(param, (err, orders) => {
       if (err) {
         console.log(err);
       }
@@ -174,6 +175,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('orderStatus', (userId) => {
+    console.log('orderStatus');
     OrderModel.find({user: userId}, (err, orders) => {
       if (err) {
         console.log(err);

@@ -1,19 +1,27 @@
 angular
   .module('myApp')
-  .controller('KitchenCtrl', function(SocketService) {
+  .controller('KitchenCtrl', function($scope, SocketService, TimeParserService) {
     this.ordered = [];
     this.cooking = [];
+    const socket = SocketService.socket;
+    const getTime = TimeParserService;
 
+    socket.emit('getOrders');
 
-    SocketService.socket.on('getOrders', (order) => {
-      console.log(order);
-
-
+    socket.on('getOrders', (order) => {
+      $scope.$apply(() => {
+        order.forEach((dish) => {
+          dish.time = getTime(dish.date);
+          if(dish.status === 'ordered') {
+            this.ordered.push(dish);
+          } else {
+            this.cooking.push(dish);
+          }
+        });
+      });
     });
 
-    SocketService.socket.on('orderStatus', (order) => {
-      console.log(order);
-
+    socket.on('orderStatus', (order) => {
 
     });
 

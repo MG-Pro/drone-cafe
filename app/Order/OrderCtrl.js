@@ -1,6 +1,6 @@
 angular
   .module('myApp')
-  .controller('OrderCtrl', function ($scope, $state, StorageService, SocketService) {
+  .controller('OrderCtrl', function ($scope, $state, StorageService, SocketService, TimeParserService) {
     const user = StorageService.getStorage();
     this.menuShow = false;
     this.order = [];
@@ -23,18 +23,7 @@ angular
       $state.go('getAuth');
     }
 
-    const getTime = (date) => {
-      const time = new Date(date);
-      let hours = time.getHours();
-      let minutes = time.getMinutes();
-      if (hours <= 9) {
-        hours = '0' + hours;
-      }
-      if(minutes <= 9) {
-        minutes = '0' + minutes;
-      }
-       return `${hours}:${minutes}`;
-    };
+    const getTime = TimeParserService;
 
     this.addFunds = () => {
       SocketService.addCredit(this.id)

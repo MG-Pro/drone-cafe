@@ -1,8 +1,7 @@
-<div class="row">
-  <div class="col s4 account">
+<div class="row kitchen">
+  <div class="col s6 account">
     <h4>Ordered dishes</h4>
-    <h5 ng-hide="vm.ordered.length">No orders yet</h5>
-    <h5 ng-show="vm.ordered.length">Your order</h5>
+    <h5 ng-hide="vm.ordered.length">No dishes yet</h5>
     <ul class="collection">
       <li ng-repeat="order in vm.ordered" class="collection-item row">
         <div class="col s9">
@@ -17,11 +16,10 @@
       </li>
     </ul>
   </div>
-  <div class="col s8">
-    <h4>Cooking process</h4>
+  <div class="col s6">
+    <h4>Cooking</h4>
     <div>
-      <h5 ng-hide="vm.cooking.length">No orders yet</h5>
-      <h5 ng-show="vm.cooking.length">Cooking</h5>
+      <h5 ng-hide="vm.cooking.length">No dishes yet</h5>
       <ul class="collection">
         <li ng-repeat="order in vm.cooking" class="collection-item row">
           <div class="col s9">
