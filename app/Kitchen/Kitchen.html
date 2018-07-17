@@ -12,7 +12,9 @@
           <p class="price">Price: <span>{{order.dish.price}}</span> C</p>
           <p class="time">Order time <span>{{order.time}}</span></p>
         </div>
-    
+        <div class="col s12 right-align">
+          <button ng-click="vm.changeStatus(order)" class="btn">Start</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -29,6 +31,9 @@
           <div class="col s3 right-align">
             <p class="price">Price: <span>{{order.dish.price}}</span> C</p>
             <p class="time">Order time <span>{{order.time}}</span></p>
+          </div>
+          <div class="col s12 right-align">
+            <button ng-click="vm.changeStatus(order)" class="btn">Complete</button>
           </div>
         </li>
       </ul>

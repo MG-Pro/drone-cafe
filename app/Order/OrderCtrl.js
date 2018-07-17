@@ -76,8 +76,16 @@ angular
     };
 
     SocketService.socket.on('orderStatus', (order) => {
-      console.log(order);
-
+      if(typeof order !== 'object') {
+        return;
+      }
+      $scope.$apply(() => {
+        this.order.forEach((elem) => {
+          if (elem._id === order._id && elem.status !== order.status) {
+            elem.status = order.status;
+          }
+        });
+      });
     });
 
   });

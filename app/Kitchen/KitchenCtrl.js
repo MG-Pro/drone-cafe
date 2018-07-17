@@ -6,8 +6,6 @@ angular
     const socket = SocketService.socket;
     const getTime = TimeParserService;
 
-    socket.emit('getOrders');
-
     socket.on('getOrders', (order) => {
       $scope.$apply(() => {
         order.forEach((dish) => {
@@ -21,7 +19,23 @@ angular
       });
     });
 
+    socket.emit('getOrders');
+
+    this.changeStatus = (order) => {
+      socket.emit('orderStatus', order._id);
+    };
+
     socket.on('orderStatus', (order) => {
+      if(typeof order !== 'object') {
+        return;
+      }
+      const index = this.ordered.findIndex((elem) => {
+        return elem._id === order._id;
+      });
+      $scope.$apply(() => {
+        this.ordered.splice(index, 1);
+        this.cooking.push(order);
+      });
 
     });
 

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const drone = require('netology-fake-drone-api');
 
 const statuses = [
   'ordered',
@@ -115,7 +116,10 @@ app.post('/dishes/all', (req, res) => {
   });
 });
 
+let i = 0;
+
 io.on('connection', (socket) => {
+  console.log(i++);
   socket.on('addCredit', (id) => {
     UserModel.findByIdAndUpdate(id, {$inc: {balance: 100}}, {new: true}, (err, res) => {
       if (err) {
@@ -150,7 +154,9 @@ io.on('connection', (socket) => {
         if (err) {
           console.log(err);
         }
+
         socket.emit('addDishToOrder', res);
+        socket.emit('orderStatus', res);
       });
     });
   });
@@ -174,13 +180,24 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('orderStatus', (userId) => {
-    console.log('orderStatus');
-    OrderModel.find({user: userId}, (err, orders) => {
+  socket.on('orderStatus', (id) => {
+    OrderModel.findById(id, (err, order) => {
       if (err) {
         console.log(err);
       }
-      socket.emit('orderStatus', orders);
+      const index = statuses.indexOf(order.status);
+      if(index >= statuses.length) {
+        console.log('cmpl');
+      } else {
+        order.status = statuses[index + 1];
+      }
+      order.save((err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        socket.emit('orderStatus', res);
+      });
+
     });
   });
 
