@@ -25,9 +25,14 @@ angular.module('myApp', [
   $urlRouterProvider.otherwise('/');
 })
   .run(($state, StorageService, $transitions) => {
-    $transitions.onStart({to: 'order'}, () => {
-      if (StorageService.getStorage()) {
-        $state.go('auth');
+    $transitions.onStart({}, (transition) => {
+      const name = transition.to().name;
+      const isAuth = StorageService.getStorage();
+      if(name === 'order' && !isAuth) {
+        $state.go('getAuth');
+      } else if(name === 'getAuth' && isAuth) {
+        $state.go('order');
       }
+
     });
   });
