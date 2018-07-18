@@ -3,9 +3,9 @@ angular
   .factory('SocketService', function () {
     const socket = io();
     return {
-      addCredit(id) {
+      addCredit(userId, val = 100) {
         return new Promise((done) => {
-          socket.emit('addCredit', id);
+          socket.emit('addCredit', {id: userId, val: val});
           socket.on('addCredit', function (res) {
             done(res);
           });

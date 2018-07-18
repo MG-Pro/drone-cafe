@@ -6,7 +6,7 @@
       <li ng-repeat="order in vm.ordered" class="collection-item row">
         <div class="col s9">
           <p class="title">{{order.dish.title}}</p>
-          <p class="status">Status <span>{{order.status}}</span></p>
+          <p class="status">Status <span ng-class="order.status">{{order.status}}</span></p>
         </div>
         <div class="col s3 right-align">
           <p class="price">Price: <span>{{order.dish.price}}</span> C</p>
@@ -26,7 +26,7 @@
         <li ng-repeat="order in vm.cooking" class="collection-item row">
           <div class="col s9">
             <p class="title">{{order.dish.title}}</p>
-            <p class="status">Status <span>{{order.status}}</span></p>
+            <p class="status">Status: <span ng-class="order.status">{{order.status}}</span></p>
           </div>
           <div class="col s3 right-align">
             <p class="price">Price: <span>{{order.dish.price}}</span> C</p>

@@ -6,7 +6,7 @@ angular
     this.order = [];
     this.menu = [];
 
-    if(user) {
+    if (user) {
       this.name = user.name;
       this.balance = user.balance;
       this.id = user._id;
@@ -76,16 +76,33 @@ angular
     };
 
     SocketService.socket.on('orderStatus', (order) => {
-      if(typeof order !== 'object') {
-        return;
-      }
-      $scope.$apply(() => {
-        this.order.forEach((elem) => {
-          if (elem._id === order._id && elem.status !== order.status) {
-            elem.status = order.status;
-          }
+      console.log(order.status);
+      if (order.status === 'rejection') {
+        SocketService.addCredit(this.id)
+          .then((res) => {
+            $scope.$apply(() => {
+              this.balance = res.balance;
+              user.balance = res.balance;
+              StorageService.setStorage(user);
+            });
+          })
+      } else if (order.status === 'deleted') {
+        const index = this.order.findIndex((elem) => {
+          return elem._id === order._id;
         });
-      });
+        $scope.$apply(() => {
+          this.order.splice(index, 1);
+        });
+      } else {
+        $scope.$apply(() => {
+          this.order.forEach((elem) => {
+            if (elem._id === order._id && elem.status !== order.status) {
+              elem.status = order.status;
+            }
+          });
+        });
+      }
+
     });
 
   });

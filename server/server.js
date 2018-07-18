@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const session = require('express-session');
 const drone = require('netology-fake-drone-api');
 
 const statuses = [
@@ -11,7 +12,8 @@ const statuses = [
   'cooking',
   'delivered',
   'rejection',
-  'filed'
+  'filed',
+  'deleted'
 ];
 
 const dbUrl = 'mongodb+srv://droneadmin:8APndnqKYshne9A0@cluster0-dmatc.gcp.mongodb.net/test?retryWrites=false';
@@ -116,12 +118,12 @@ app.post('/dishes/all', (req, res) => {
   });
 });
 
-let i = 0;
-
 io.on('connection', (socket) => {
-  console.log(i++);
-  socket.on('addCredit', (id) => {
-    UserModel.findByIdAndUpdate(id, {$inc: {balance: 100}}, {new: true}, (err, res) => {
+  const room = 'def';
+  socket.join(room);
+
+  socket.on('addCredit', (data) => {
+    UserModel.findByIdAndUpdate(data.id, {$inc: {balance: data.val}}, {new: true}, (err, res) => {
       if (err) {
         console.log(err);
       }
@@ -143,7 +145,6 @@ io.on('connection', (socket) => {
       if (err) {
         console.log(err);
       }
-
       const order = new OrderModel({
         dish: dish,
         status: statuses[0],
@@ -154,9 +155,8 @@ io.on('connection', (socket) => {
         if (err) {
           console.log(err);
         }
-
         socket.emit('addDishToOrder', res);
-        socket.emit('orderStatus', res);
+        io.in(room).emit('orderStatus', res);
       });
     });
   });
@@ -181,13 +181,51 @@ io.on('connection', (socket) => {
   });
 
   socket.on('orderStatus', (id) => {
+    const autoRemoveOrder = (id) => {
+      return new Promise((done, reject) => {
+        setTimeout(() => {
+          OrderModel.findByIdAndDelete(id, (err, res) => {
+            if (err) {
+              reject(err);
+            }
+            done(res);
+          })
+        }, 10000)
+      })
+    };
+
     OrderModel.findById(id, (err, order) => {
       if (err) {
         console.log(err);
       }
       const index = statuses.indexOf(order.status);
-      if(index >= statuses.length) {
-        console.log('cmpl');
+      if(order.status === 'cooking') {
+        order.status = statuses[2];
+        drone.deliver()
+          .then(() => {
+            order.status = statuses[3];
+            order.save((err, res) => {
+              if (err) {
+                console.log(err);
+              }
+              socket.in(room).emit('orderStatus', res);
+              autoRemoveOrder(res._id)
+                .then((order) => {
+                  order.status = statuses[5];
+                  socket.in(room).emit('orderStatus', order);
+                })
+                .catch(err => console.log(err));
+            });
+          })
+          .catch(() => {
+            order.status = statuses[4];
+            order.save((err, res) => {
+              if (err) {
+                console.log(err);
+              }
+              socket.in(room).emit('orderStatus', res);
+            });
+          });
       } else {
         order.status = statuses[index + 1];
       }
@@ -195,7 +233,7 @@ io.on('connection', (socket) => {
         if (err) {
           console.log(err);
         }
-        socket.emit('orderStatus', res);
+        io.in(room).emit('orderStatus', res);
       });
 
     });
