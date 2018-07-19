@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const session = require('express-session');
 const drone = require('netology-fake-drone-api');
 
 const statuses = [
@@ -190,7 +189,7 @@ io.on('connection', (socket) => {
             }
             done(res);
           })
-        }, 10000)
+        }, 20000)
       })
     };
 
