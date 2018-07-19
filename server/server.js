@@ -189,7 +189,7 @@ io.on('connection', (socket) => {
             }
             done(res);
           })
-        }, 20000)
+        }, 120000)
       })
     };
 
