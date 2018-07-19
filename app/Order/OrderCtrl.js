@@ -76,7 +76,6 @@ angular
     };
 
     SocketService.socket.on('orderStatus', (order) => {
-      console.log(order.status);
       if (order.status === 'rejection') {
         SocketService.addCredit(this.id, order.dish.price)
           .then((res) => {

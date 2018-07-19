@@ -15,7 +15,7 @@
   "keywords": [],
   "author": "MIkhail Gladkikh",
   "license": "MIT",
-  "homepage": "https://lit-plateau-22930.herokuapp.com/#!/",
+  "homepage": "https://drone-cafe-management.herokuapp.com/#!/",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
