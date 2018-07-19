@@ -90,13 +90,13 @@ app.post('/users/', (req, res) => {
       sender('err', err, res);
     }
     if(user === null) {
-      const user = new UserModel({
+      const newUser = new UserModel({
         name: userData.name,
         email: userData.email,
         balance: 100,
       });
 
-      user.save((err, user) => {
+      newUser.save((err, user) => {
         if (err) {
           sender('err', err, res)
         }
