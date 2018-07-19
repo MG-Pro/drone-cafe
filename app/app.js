@@ -1,7 +1,6 @@
 'use strict';
 angular.module('myApp', [
   'ui.router',
-  'ngMessages',
   'ngResource',
   'LocalStorageModule'
 ]).config(($stateProvider, $urlRouterProvider) => {

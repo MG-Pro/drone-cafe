@@ -4,9 +4,11 @@
   "description": "Дипломный проект",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./server/server.js",
-    "heroku": "git push heroku master"
+    "heroku": "git push heroku master",
+    "wd-u": "webdriver-manager update",
+    "wd-s": "webdriver-manager start",
+    "e2e": "protractor e2e-tests/protractor.conf.js"
   },
   "repository": {
     "type": "git",
@@ -15,14 +17,25 @@
   "keywords": [],
   "author": "MIkhail Gladkikh",
   "license": "MIT",
-  "homepage": "https://drone-cafe-management.herokuapp.com/#!/",
+  "homepage": "https://drone-cafe-management.herokuapp.com",
   "dependencies": {
+    "@uirouter/angularjs": "^1.0.18",
+    "angular": "^1.7.2",
+    "angular-local-storage": "^0.7.1",
+    "angular-resource": "^1.7.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongodb": "^3.0.10",
     "mongoose": "^5.1.5",
     "netology-fake-drone-api": "^1.0.1",
     "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "chai-as-promised": "^7.1.1",
+    "http-server": "^0.9.0"
   },
   "engines": {
     "node": "8.11.x",
