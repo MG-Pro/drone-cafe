@@ -4,7 +4,7 @@
   "description": "Дипломный проект",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./server/server.js",
+    "start": "nodemon ./server/index.js",
     "heroku": "git push heroku master",
     "wd-u": "webdriver-manager update",
     "wd-s": "webdriver-manager start",

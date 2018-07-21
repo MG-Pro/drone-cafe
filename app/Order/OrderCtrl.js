@@ -19,8 +19,6 @@ angular
             })
           });
         });
-    } else {
-      $state.go('getAuth');
     }
 
     const getTime = TimeParserService;
@@ -75,8 +73,19 @@ angular
         })
     };
 
+    const changeStatus = (order) => {
+      $scope.$apply(() => {
+        this.order.forEach((elem) => {
+          if (elem._id === order._id && elem.status !== order.status) {
+            elem.status = order.status;
+          }
+        });
+      });
+    };
+
     SocketService.socket.on('orderStatus', (order) => {
       if (order.status === 'rejection') {
+        changeStatus(order);
         SocketService.addCredit(this.id, order.dish.price)
           .then((res) => {
             $scope.$apply(() => {
@@ -93,15 +102,7 @@ angular
           this.order.splice(index, 1);
         });
       } else {
-        $scope.$apply(() => {
-          this.order.forEach((elem) => {
-            if (elem._id === order._id && elem.status !== order.status) {
-              elem.status = order.status;
-            }
-          });
-        });
+        changeStatus(order);
       }
-
     });
-
   });
