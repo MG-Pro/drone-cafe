@@ -29,7 +29,7 @@ app.get('/users/', (req, res) => {
   })
 });
 
-// возвращает пользователя и создает нового
+// возвращает пользователя или создает нового
 app.post('/users/', (req, res) => {
   const userData = req.body;
   if (!userData.email) {

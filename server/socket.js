@@ -28,6 +28,16 @@ exports.socketHandler = (socket) => {
     });
   });
 
+  // списание кредитов с баланса пользователя
+  socket.on('subCredit', (data) => {
+    UserModel.findByIdAndUpdate(data.id, {$inc: {balance: - data.val}}, {new: true}, (err, res) => {
+      if (err) {
+        console.log(err);
+      }
+      socket.emit('subCredit', res);
+    });
+  });
+
   // получение списка блюд
   socket.on('getDishes', () => {
     DishModel.find((err, res) => {
@@ -60,16 +70,6 @@ exports.socketHandler = (socket) => {
     });
   });
 
-  // списание кредитов с баланса пользователя
-  socket.on('subCredit', (data) => {
-    UserModel.findByIdAndUpdate(data.id, {$inc: {balance: - data.val}}, {new: true}, (err, res) => {
-      if (err) {
-        console.log(err);
-      }
-      socket.emit('subCredit', res);
-    });
-  });
-
   // получение списка всех заказов
   socket.on('getOrders', (userId) => {
     const param = userId ? {user: userId} : null;
@@ -83,6 +83,7 @@ exports.socketHandler = (socket) => {
 
   // меняет статус заказа
   socket.on('orderStatus', (id) => {
+    console.log(id);
     const autoRemoveOrder = (id) => {
       return new Promise((done, reject) => {
         setTimeout(() => {
@@ -135,6 +136,7 @@ exports.socketHandler = (socket) => {
           });
       } else { // перевод заказа в след. статус
         order.status = statuses[index + 1];
+        console.log(order.status);
       }
       order.save((err, res) => { // ответ с заказом в новом статусе
         if (err) {

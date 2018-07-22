@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server/index.js",
+    "test": "mocha ./tests/test.server.js --timeout 5000",
     "heroku": "git push heroku master",
     "wd-u": "webdriver-manager update",
     "wd-s": "webdriver-manager start",
@@ -29,6 +30,7 @@
     "mongoose": "^5.1.5",
     "netology-fake-drone-api": "^1.0.1",
     "protractor": "^5.4.0",
+    "request": "^2.87.0",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
