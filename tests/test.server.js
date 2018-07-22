@@ -1,6 +1,5 @@
 const chai = require('chai');
 const supertest = require('supertest');
-const expect = chai.expect;
 const assert = chai.assert;
 const request = require('request');
 const io = require('socket.io-client');

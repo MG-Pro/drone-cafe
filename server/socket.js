@@ -83,7 +83,6 @@ exports.socketHandler = (socket) => {
 
   // меняет статус заказа
   socket.on('orderStatus', (id) => {
-    console.log(id);
     const autoRemoveOrder = (id) => {
       return new Promise((done, reject) => {
         setTimeout(() => {
