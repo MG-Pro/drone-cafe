@@ -28,12 +28,6 @@ describe('User balance', function () {
             console.log(result[1], startVal);
             expect(+result[1]).equal(+startVal + 100);
           });
-
       })
-
-
-
-
-
   });
 });
