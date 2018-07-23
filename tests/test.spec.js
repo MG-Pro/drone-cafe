@@ -24,21 +24,38 @@ describe('Order', function () {
   });
 
   it('should add to user balance 100 c', function () {
-    orderPage.getBalanceVal()
-      .then((startVal) => {
-        Promise.all([orderPage.addCredit(), orderPage.getBalanceVal()])
-          .then(result => {
-            console.log(result[1], startVal);
-            expect(+result[1]).equal(+startVal + 100);
-          });
-      })
+    Promise.all([orderPage.addCredit(), orderPage.getBalanceVal()])
+      .then(result => {
+        setTimeout(() => {
+          expect(+orderPage.getBalanceVal()).eventually.equal(+result[1] + 100);
+        }, 2000);
+      });
   });
 
   it('should open list of dishes', function () {
     const click = orderPage.openDishList();
     const modal = orderPage.getDishList();
     Promise.all([click, modal]).then(res => {
-        expect(res[1].isDisplayed()).eventually.equal(true);
+      expect(res[1].isDisplayed()).eventually.equal(true);
     });
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
