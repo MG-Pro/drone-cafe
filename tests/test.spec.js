@@ -17,10 +17,13 @@ describe('Authorization', function () {
   });
 });
 
-describe('User balance', function () {
-  it('should add to user balance 100 c', function () {
-    const orderPage = new OrderPage;
+describe('Order', function () {
+  const orderPage = new OrderPage;
+  before(() => {
     orderPage.get();
+  });
+
+  it('should add to user balance 100 c', function () {
     orderPage.getBalanceVal()
       .then((startVal) => {
         Promise.all([orderPage.addCredit(), orderPage.getBalanceVal()])
@@ -29,5 +32,13 @@ describe('User balance', function () {
             expect(+result[1]).equal(+startVal + 100);
           });
       })
+  });
+
+  it('should open list of dishes', function () {
+    const click = orderPage.openDishList();
+    const modal = orderPage.getDishList();
+    Promise.all([click, modal]).then(res => {
+        expect(res[1].isDisplayed()).eventually.equal(true);
+    });
   });
 });
