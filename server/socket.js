@@ -53,6 +53,7 @@ exports.socketHandler = (socket) => {
     DishModel.findById(data.dishId, (err, dish) => {
       if (err) {
         console.log(err);
+        return;
       }
       const order = new OrderModel({
         dish: dish,
@@ -63,6 +64,7 @@ exports.socketHandler = (socket) => {
       order.save((err, res) => {
         if (err) {
           console.log(err);
+          return;
         }
         socket.emit('addDishToOrder', res);
         io.in(room).emit('orderStatus', res);
@@ -98,6 +100,7 @@ exports.socketHandler = (socket) => {
     OrderModel.findById(id, (err, order) => {
       if (err) {
         console.log(err);
+        return;
       }
       const index = statuses.indexOf(order.status); // получает индекс текущего статуса
       if(order.status === 'cooking') {
@@ -108,6 +111,7 @@ exports.socketHandler = (socket) => {
             order.save((err, res) => {
               if (err) {
                 console.log(err);
+                return;
               }
               socket.in(room).emit('orderStatus', res);
               autoRemoveOrder(res._id) // автоудаление заказа
@@ -123,6 +127,7 @@ exports.socketHandler = (socket) => {
             order.save((err, res) => {
               if (err) {
                 console.log(err);
+                return;
               }
               socket.in(room).emit('orderStatus', res);
               autoRemoveOrder(res._id) // автоудаление заказа
@@ -140,6 +145,7 @@ exports.socketHandler = (socket) => {
       order.save((err, res) => { // ответ с заказом в новом статусе
         if (err) {
           console.log(err);
+          return;
         }
         io.in(room).emit('orderStatus', res);
       });

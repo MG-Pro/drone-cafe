@@ -24,6 +24,7 @@ app.get('/users/', (req, res) => {
   UserModel.find((err, users) => {
     if (err) {
       sender('err', err, res);
+      return;
     }
     sender('OK', users, res);
   })
@@ -39,6 +40,7 @@ app.post('/users/', (req, res) => {
   UserModel.findOne({email: userData.email}, (err, user) => {
     if (err) {
       sender('err', err, res);
+      return;
     }
     if(user === null) {
       const newUser = new UserModel({
@@ -49,7 +51,8 @@ app.post('/users/', (req, res) => {
 
       newUser.save((err, user) => {
         if (err) {
-          sender('err', err, res)
+          sender('err', err, res);
+          return;
         }
         sender('OK', user, res);
       });
@@ -63,7 +66,8 @@ app.post('/users/', (req, res) => {
 app.post('/dishes/all', (req, res) => {
   DishModel.create(req.body, err => {
     if (err) {
-      sender('err', err, res)
+      sender('err', err, res);
+      return;
     }
     sender('OK', 'Dish added', res);
   });
