@@ -26,7 +26,7 @@ angular.module('myApp', [
   .run(($state, StorageService, $transitions) => {
     $transitions.onStart({}, (transition) => {
       const name = transition.to().name;
-      const isAuth = StorageService.getStorage();
+      const isAuth = StorageService.getUser();
       if(name === 'order' && !isAuth) {
         $state.go('getAuth');
       } else if(name === 'getAuth' && isAuth) {

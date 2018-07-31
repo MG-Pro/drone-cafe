@@ -5,7 +5,7 @@ angular
 
     controller: function($scope, StorageService, $state, $transitions) {
       $scope.isAuth = false;
-      const user = StorageService.getStorage();
+      const user = StorageService.getUser();
 
       if(user) {
         $scope.isAuth = true;
@@ -20,7 +20,7 @@ angular
         $state.go('kitchen');
       };
       $transitions.onSuccess({}, () => {
-        $scope.isAuth = !!StorageService.getStorage();
+        $scope.isAuth = !!StorageService.getUser();
       });
       $transitions.onSuccess({to: 'kitchen'}, () => {
         $scope.isAuth = false;

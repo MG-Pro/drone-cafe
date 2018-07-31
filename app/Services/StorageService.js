@@ -2,10 +2,10 @@ angular
   .module('myApp')
   .factory('StorageService', function(localStorageService) {
     return {
-      setStorage(data) {
+      setUser(data) {
         localStorageService.cookie.set('user', data, 1);
       },
-      getStorage() {
+      getUser() {
         return localStorageService.cookie.get('user');
       },
       clearStorage() {

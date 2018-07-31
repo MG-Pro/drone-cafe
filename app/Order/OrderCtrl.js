@@ -1,7 +1,7 @@
 angular
   .module('myApp')
   .controller('OrderCtrl', function ($scope, $state, StorageService, SocketService, TimeParserService) {
-    const user = StorageService.getStorage();
+    const user = StorageService.getUser();
     this.menuShow = false;
     this.order = [];
     this.menu = [];
@@ -29,7 +29,7 @@ angular
           $scope.$apply(() => {
             this.balance = res.balance;
             user.balance = res.balance;
-            StorageService.setStorage(user);
+            StorageService.setUser(user);
           });
         })
     };
@@ -65,7 +65,7 @@ angular
             this.order.push(res[0]);
             this.balance = res[1].balance;
             user.balance = res[1].balance;
-            StorageService.setStorage(user);
+            StorageService.setUser(user);
           });
         })
         .catch((err) => {
@@ -91,7 +91,7 @@ angular
             $scope.$apply(() => {
               this.balance = res.balance;
               user.balance = res.balance;
-              StorageService.setStorage(user);
+              StorageService.setUser(user);
             });
           })
       } else if (order.status === 'deleted') {
